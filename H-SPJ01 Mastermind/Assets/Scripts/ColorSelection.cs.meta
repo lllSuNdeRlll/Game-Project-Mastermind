@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: b5a385ca25a719548b95a54035e8efbc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - colorSelectionBarPrefab: {fileID: 2981212364766169182, guid: b5d0b08eeffd9e249828dd9a1ab774d3, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
