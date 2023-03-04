@@ -15,6 +15,7 @@ public class Slot : MonoBehaviour
     
     void Start()
     {
+        //Get Row Gameobject
         parentObject = gameObject.transform.parent.gameObject;
     }
 
@@ -39,7 +40,7 @@ public class Slot : MonoBehaviour
         //Get all the children of the parent object and check if the row has been filled
         for (int i = 0; i < parentObject.transform.childCount; i++)
         {
-            if(parentObject.transform.GetChild(i).GetComponent<Image>().sprite.name=="empty" /*&& parentObject.transform.GetChild(i).GetComponent<Button>().name!="Validate"*/){
+            if(parentObject.transform.GetChild(i).GetComponent<Image>().sprite.name=="empty"){
                 counter++;
             }else{
                 validateButton = parentObject.transform.GetChild(i).GetComponent<Button>();
