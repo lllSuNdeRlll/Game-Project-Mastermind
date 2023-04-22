@@ -288,7 +288,7 @@ MonoBehaviour:
   red: {fileID: 21300000, guid: f3f6934e32a69a84582472bae585b241, type: 3}
   blue: {fileID: 21300000, guid: b5fee474226cf5d499b79dac3bc74608, type: 3}
   yellow: {fileID: 21300000, guid: c511b285fa487364f8037e8507220145, type: 3}
-  purple: {fileID: 0}
+  purple: {fileID: 21300000, guid: 4ff564ce47ff05149a04459167fa1101, type: 3}
   black: {fileID: 21300000, guid: 24d8e34f06e1df841a4726d92958e014, type: 3}
   white: {fileID: 21300000, guid: 52af311d63edc6c4b9e2f60682527ecd, type: 3}
   empty: {fileID: 21300000, guid: 8011ef69f603a99468cf183e86ed8452, type: 3}

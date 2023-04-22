@@ -13,6 +13,8 @@ public class Solution : MonoBehaviour
     [SerializeField] GameObject winPrefab = null;
     [SerializeField] GameObject loosePrefab = null;
     [SerializeField] GameObject solutionRow = null;
+    [SerializeField] GameObject pointer= null;
+    [SerializeField] GameObject blockPanel= null;
     [SerializeField] Sprite green = null;
     [SerializeField] Sprite red = null;
     [SerializeField] Sprite blue = null;
@@ -22,7 +24,7 @@ public class Solution : MonoBehaviour
     [SerializeField] Sprite white = null;
     [SerializeField] Sprite empty = null;
 
-    private int[] solution = new int[5];
+    private int[] solutionArray = new int[5];
     List<int> solutionList = new List<int>();
     List<int> compareResult = new List<int>();
 
@@ -32,11 +34,11 @@ public class Solution : MonoBehaviour
         generateColors();
     }
 
-    //Create Code 
+    //Create ColorCode 
     private void generateColors(){
-        for (int i = 0; i < solution.Length; i++)
+        for (int i = 0; i < solutionArray.Length; i++)
         {
-            solution[i] = UnityEngine.Random.Range(1,5);
+            solutionArray[i] = UnityEngine.Random.Range(1,5);
         }
     }
 
@@ -69,16 +71,20 @@ public class Solution : MonoBehaviour
                     break;
            }
 
-           //Disable Button Interactable
+           //Disable Button Interactable for Slots and Validate
            parentGameObject.transform.GetChild(i).GetComponent<Button>().interactable = false;
         }
+
+        //Blockpanel and Pointer are moved after validation, the canvas ist substracted by 3.6f to move the same distance no matter the resolution
+        blockPanel.transform.position = new Vector3(blockPanel.transform.position.x, blockPanel.transform.position.y+GameObject.FindGameObjectWithTag("Canvas").transform.position.y/3.6f,0);
+        pointer.transform.position = new Vector3(pointer.transform.position.x, pointer.transform.position.y+GameObject.FindGameObjectWithTag("Canvas").transform.position.y/3.6f,0);
 
         compareWithSolution(colors, validateButton);
     }
 
     private void compareWithSolution(int[] arr, Button validateButton){
         //List which contains all the values the solution array and used for comparing colors
-        solutionList = solution.ToList();
+        solutionList = solutionArray.ToList();
         GameObject checkArea = Instantiate(validateAreaPrefab,new Vector3(validateButton.transform.position.x,validateButton.transform.position.y,0), Quaternion.identity,GameObject.FindGameObjectWithTag("Canvas").transform);
         
         //If position and color are correct value of solutionList will be set to zero
@@ -146,9 +152,9 @@ public class Solution : MonoBehaviour
 
     //Set and display the sprites of the solution
     private void displaySolution(){
-        for (int i = 0; i < solution.Length; i++)
+        for (int i = 0; i < solutionArray.Length; i++)
         {
-            switch(solution[i]){
+            switch(solutionArray[i]){
                 case 1:
                     solutionRow.transform.GetChild(i).GetComponent<Image>().sprite= green;
                     break;   
@@ -182,6 +188,8 @@ public class Solution : MonoBehaviour
             Instantiate(loosePrefab,new Vector3(txtSolution.transform.position.x,txtSolution.transform.position.y,0), Quaternion.identity,GameObject.FindGameObjectWithTag("Canvas").transform);
             Destroy(txtSolution);
         }
+        
+        pointer.SetActive(false);
         Instantiate(newGameButtonPrefab,new Vector3(solutionRow.transform.position.x,solutionRow.transform.position.y-100,0), Quaternion.identity,GameObject.FindGameObjectWithTag("Canvas").transform);
     }
 }
