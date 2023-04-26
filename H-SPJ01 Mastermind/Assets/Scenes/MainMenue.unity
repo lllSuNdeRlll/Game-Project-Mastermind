@@ -864,7 +864,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 605832842}
         m_TargetAssemblyTypeName: SceneHandling, Assembly-CSharp
-        m_MethodName: onSinglePlayer
+        m_MethodName: onMultiplayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

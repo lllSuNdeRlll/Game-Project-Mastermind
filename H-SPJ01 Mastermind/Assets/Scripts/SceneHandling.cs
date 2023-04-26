@@ -12,4 +12,8 @@ public class SceneHandling : MonoBehaviour
    public void onSinglePlayer(){
         SceneManager.LoadScene("SinglePlayer");
    } 
+
+   public void onMultiplayer(){
+        SceneManager.LoadScene("Lobby");
+     }
 }
