@@ -47,7 +47,7 @@ public class MMNetworkManager : NetworkManager
     public void StartGame(){
         if(Players.Count < 2){return;}
         gameInProgress = true;
-        ServerChangeScene("MultiPlayer");
+        ServerChangeScene("Multiplayer");
     }
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)

@@ -2,15 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Mirror;
 
 public class cancelGame : MonoBehaviour
 {
+    [SerializeField] bool isMultiplayer = false;
+
     public void onCancelGame(GameObject cancelConfirmation){
         cancelConfirmation.SetActive(true);
     }
 
     public void onConfirmCancel(){
-        SceneManager.LoadScene("StartMenu");
+        if(isMultiplayer){
+            if(NetworkServer.active && NetworkClient.isConnected){
+                NetworkManager.singleton.StopHost();
+            } else {
+                NetworkManager.singleton.StopClient();
+                SceneManager.LoadScene(0);
+            }
+        } else {
+            SceneManager.LoadScene("MainMenue");
+        }
     }
 
     public void onDenyCancel(){

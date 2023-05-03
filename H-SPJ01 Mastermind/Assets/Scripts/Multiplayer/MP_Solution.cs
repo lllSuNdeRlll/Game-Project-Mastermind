@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using Mirror;
 using TMPro;
 
-public class Solution : MonoBehaviour
+public class MP_Solution : NetworkBehaviour
 {
     [SerializeField] GameObject validateAreaPrefab = null;
-    [SerializeField] Button newGameButtonPrefab = null;
     [SerializeField] TMP_Text txtSolution = null;
-    [SerializeField] GameObject winPrefab = null;
-    [SerializeField] GameObject loosePrefab = null;
+    [SerializeField] Button newGameButton = null;
     [SerializeField] GameObject solutionRow = null;
     [SerializeField] GameObject pointer= null;
     [SerializeField] GameObject blockPanel= null;
@@ -26,22 +25,37 @@ public class Solution : MonoBehaviour
 
     private int[] solutionArray = new int[5];
 
+    //Updates the list for all clients
+    [SyncVar]
+    List<int> serverList = new List<int>();
+
     List<int> solutionList = new List<int>();
     List<int> compareResult = new List<int>();
+
+    Player player;
 
     // Start is called before the first frame update
     void Start()
     {
-        generateColors();
+        Player.ClientWinnerUpdated += ClientWinnerUpdate;
+        player = NetworkClient.connection.identity.GetComponent<Player>();
+        if(NetworkServer.active){
+            generateColors();
+        }
+    }
+
+    private void OnDestroy(){
+        Player.ClientWinnerUpdated -= ClientWinnerUpdate;
     }
 
     //Create ColorCode 
+    [Server]
     private void generateColors(){
         for (int i = 0; i < solutionArray.Length; i++)
         {
-            //minimum value is inclusive, maximum value is not inclusive https://gamedevbeginner.com/how-to-use-random-values-in-unity-with-examples/
             solutionArray[i] = UnityEngine.Random.Range(1,6);
         }
+        serverList = solutionArray.ToList();
     }
 
     //When button validate is pressed to check Player Input
@@ -50,7 +64,7 @@ public class Solution : MonoBehaviour
         int[] colors = new int[5];
 
         //Fill array with numbers according to their color
-        for (int i = 0; i < parentGameObject.transform.childCount; i++)
+        for (int i = 0; i < parentGameObject.transform.childCount-1; i++)
         {
            switch(parentGameObject.transform.GetChild(i).GetComponent<Image>().sprite.name){
                 case "green":
@@ -86,19 +100,18 @@ public class Solution : MonoBehaviour
 
     private void compareWithSolution(int[] arr, Button validateButton){
         //List which contains all the values the solution array and used for comparing colors
-        solutionList = solutionArray.ToList();
-        
+        solutionList = new List<int>(serverList);
+
         handleComparison(arr,validateButton);
+        
         //If all colors match end the game, otherwise the game will end once the 6th row has been incorrectly filled
         if(allColorsMatch()){
-            displaySolution();
             //Won
-            gameOver(1);
+            player.CmdSetWinner(player.GetPlayerName());
         }else if(validateButton.transform.parent.name == "Row6"){
-            Debug.Log("This gets executed");
+            txtSolution.text = "Verloren";
+            pointer.SetActive(false);
             displaySolution();
-            //Lost
-            gameOver(0);
         }
         Destroy(validateButton.gameObject);
         compareResult.Clear();
@@ -144,6 +157,11 @@ public class Solution : MonoBehaviour
                 checkArea.transform.GetChild(i).GetComponent<Image>().sprite=empty;
             }
         }
+
+        //Increase rowCount of Player, must be before displaySolution() is called
+        if(player.GetPlayerRowProgress() <= 6){
+           player.CmdUpdatePlayerRowProgress(player.GetPlayerRowProgress()+1); 
+        }
     }
 
     //Check if all colors are correct = black
@@ -158,9 +176,9 @@ public class Solution : MonoBehaviour
 
     //Set and display the sprites of the solution
     private void displaySolution(){
-        for (int i = 0; i < solutionArray.Length; i++)
+        for (int i = 0; i < serverList.Count; i++)
         {
-            switch(solutionArray[i]){
+            switch(serverList[i]){
                 case 1:
                     solutionRow.transform.GetChild(i).GetComponent<Image>().sprite= green;
                     break;   
@@ -183,20 +201,14 @@ public class Solution : MonoBehaviour
         }
     }
 
-    private void gameOver(int checkWin){
-        //Win
-        if(checkWin==1){
-            Instantiate(winPrefab,new Vector3(txtSolution.transform.position.x,txtSolution.transform.position.y,0), Quaternion.identity,GameObject.FindGameObjectWithTag("Canvas").transform);
-            Destroy(txtSolution);
-        } 
-        //Loose
-        else if(checkWin==0){
-            Instantiate(loosePrefab,new Vector3(txtSolution.transform.position.x,txtSolution.transform.position.y,0), Quaternion.identity,GameObject.FindGameObjectWithTag("Canvas").transform);
-            Destroy(txtSolution);
-        }
-        
+    private void ClientWinnerUpdate(){
+        if(player.GetWinner()==null){return;}
+        displaySolution();
+        txtSolution.text = player.GetWinner() + " hat gewonnen";
         pointer.SetActive(false);
-        Instantiate(newGameButtonPrefab,new Vector3(solutionRow.transform.position.x,solutionRow.transform.position.y-100,0), Quaternion.identity,GameObject.FindGameObjectWithTag("Canvas").transform);
+        blockPanel.SetActive(true);
+        if(NetworkServer.active){
+            newGameButton.gameObject.SetActive(true);
+        }
     }
-
 }

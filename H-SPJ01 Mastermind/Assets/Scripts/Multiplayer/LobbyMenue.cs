@@ -45,7 +45,7 @@ public class LobbyMenue : MonoBehaviour
     }
 
     public void changeName(){
-        NetworkClient.connection.identity.GetComponent<Player>().SetPlayerNameClient(newPlayerName.text);
+        NetworkClient.connection.identity.GetComponent<Player>().CmdSetPlayerNameClient(newPlayerName.text);
     }
 
     public void HandleClientPlayerNameUpdate(){

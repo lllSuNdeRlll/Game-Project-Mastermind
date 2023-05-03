@@ -3,13 +3,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using TMPro;
+
+public struct ColorNumber{
+    public int number;
+}
 
 public class Player : NetworkBehaviour
 {
     [SyncVar (hook = nameof(ClientHandlePlayerNameUpdate))]
     private string playerName;
 
+    [SyncVar (hook = nameof(ClientHandleRowProgressUpdate))]
+    private int rowProgress = 0; 
+
+    [SyncVar (hook = nameof(ClientHandlePlayerReadyUpdate))]
+    private bool playerReady = false;
+
+    [SyncVar (hook = nameof(ClientHandleWinnerUpdate))]
+    private string winner;
+
     public static event Action ClientPlayerNameUpdated;
+    public static event Action ClientRowProgressUpdated;
+    public static event Action ClientPlayerReadyUpdated;
+    public static event Action ClientWinnerUpdated;
+
+    public string GetPlayerName(){
+        return playerName;
+    }
+
+    public bool GetPlayerReady(){
+        return playerReady;
+    }
+
+    public int GetPlayerRowProgress(){
+        return rowProgress;
+    }
+
+    public string GetWinner(){
+        return winner;
+    }
+
+    public void ResetPlayer(){
+        rowProgress = 0;
+        playerReady = false;
+        winner = null;
+    }
 
     public override void OnStartServer()
     {
@@ -39,12 +78,47 @@ public class Player : NetworkBehaviour
     public override void OnStopClient()
     {
         ClientPlayerNameUpdated?.Invoke();
-        
+
         if(NetworkServer.active){return;}
 
         Destroy(gameObject);
 
         ((MMNetworkManager)NetworkManager.singleton).Players.Remove(this);
+    } 
+
+    #region Commands
+    //Update playername initiated by client
+    [Command]
+    public void CmdSetPlayerNameClient(string name){
+        this.playerName = name;
+    }
+    
+    [Command]
+    public void CmdSetPlayerReady(bool pReady){
+        this.playerReady = pReady;
+    }
+
+    [Command]
+    public void CmdSetWinner(string name){
+        List<Player> players = ((MMNetworkManager)NetworkManager.singleton).Players;
+        foreach(Player p  in players){
+            //Sets the variable on each player instance to the winner
+            p.SetWinner(name);
+        }
+    }
+
+    private void SetWinner(string name){
+        this.winner = name;
+    }
+
+    [Command]
+    public void CmdUpdatePlayerRowProgress(int number){
+        this.rowProgress = number;
+    }
+
+    [Command]
+    public void CmdNewGameButton(GameObject newGameButton){
+        newGameButton.SetActive(true);
     }
 
     //Only the host can start the game
@@ -53,14 +127,23 @@ public class Player : NetworkBehaviour
         ((MMNetworkManager)NetworkManager.singleton).StartGame();
     }
 
-    public string GetPlayerName(){
-        return playerName;
+    //Check if all players are ready, if true start the game (RpcLoardBoard)
+    public bool CmdGetPlayersReady(){
+        List<Player> players = ((MMNetworkManager)NetworkManager.singleton).Players;
+        int readyCounter = 0;
+        foreach(Player p  in players){
+            if(p.GetPlayerReady()){
+                readyCounter++;
+            }
+        }
+        if(readyCounter == players.Count){
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    [Command]
-    public void SetPlayerNameClient(string name){
-        this.playerName = name;
-    }
+    #endregion 
 
     [Server]
     public void SetPlayerName(string name){
@@ -69,5 +152,17 @@ public class Player : NetworkBehaviour
 
     private void ClientHandlePlayerNameUpdate(string oldPlayerName, string newPlayerName){
         ClientPlayerNameUpdated?.Invoke();
+    }
+
+    private void ClientHandleRowProgressUpdate(int oldValue, int newValue){
+        ClientRowProgressUpdated?.Invoke();
+    }
+
+    private void ClientHandlePlayerReadyUpdate(bool oldValue, bool newValue){
+        ClientPlayerReadyUpdated?.Invoke();
+    }
+
+    private void ClientHandleWinnerUpdate(string oldPlayerName, string newPlayerName){
+        ClientWinnerUpdated?.Invoke();
     }
 }
