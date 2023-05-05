@@ -5,15 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandling : MonoBehaviour
 {
-   public void onNewGame(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-   }
+     public void onNewGame(){
+          SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+     }
 
-   public void onSinglePlayer(){
-        SceneManager.LoadScene("SinglePlayer");
-   } 
+     public void onSinglePlayer(){
+          SceneManager.LoadScene("SinglePlayer");
+     } 
 
-   public void onMultiplayer(){
-        SceneManager.LoadScene("Lobby");
+     public void onMultiplayer(){
+          SceneManager.LoadScene("Lobby");
+     }
+
+     public void onSteamMultiplayer(){
+          SceneManager.LoadScene("SteamLobby");
      }
 }
