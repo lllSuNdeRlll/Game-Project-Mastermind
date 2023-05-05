@@ -20,4 +20,8 @@ public class SceneHandling : MonoBehaviour
      public void onSteamMultiplayer(){
           SceneManager.LoadScene("SteamLobby");
      }
+
+     public void onEndGame(){
+          Application.Quit();
+     }
 }

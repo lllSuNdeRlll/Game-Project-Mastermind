@@ -46,6 +46,11 @@ public class Solution : MonoBehaviour
 
     //When button validate is pressed to check Player Input
     public void onValidate(Button validateButton){
+        //Destroy GameObject if there is an active selectionbar
+        if(GameObject.Find("ColorSelectionBar(Clone)")){
+            Destroy(GameObject.Find("ColorSelectionBar(Clone)"));
+        }
+        
         GameObject parentGameObject = validateButton.transform.parent.gameObject;
         int[] colors = new int[5];
 

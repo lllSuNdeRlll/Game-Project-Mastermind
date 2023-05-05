@@ -1460,7 +1460,7 @@ RectTransform:
   - {fileID: 401025584}
   - {fileID: 103128818}
   m_Father: {fileID: 1088820428}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1685,7 +1685,7 @@ RectTransform:
   - {fileID: 787941721}
   - {fileID: 457033950}
   m_Father: {fileID: 1088820428}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2221,7 +2221,7 @@ RectTransform:
   m_Children:
   - {fileID: 1425101227}
   m_Father: {fileID: 1088820428}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3345,6 +3345,7 @@ RectTransform:
   - {fileID: 219391711}
   - {fileID: 1958830701}
   - {fileID: 108805745}
+  - {fileID: 1789284560}
   - {fileID: 1468162051}
   - {fileID: 2000778756}
   - {fileID: 772028491}
@@ -4308,7 +4309,7 @@ RectTransform:
   m_Children:
   - {fileID: 1396296268}
   m_Father: {fileID: 1088820428}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4563,6 +4564,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1604874879}
   m_CullTransparentMesh: 1
+--- !u!1 &1789284559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1789284560}
+  - component: {fileID: 1789284562}
+  - component: {fileID: 1789284561}
+  m_Layer: 5
+  m_Name: gameOverBlocker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1789284560
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789284559}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1088820428}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -472.08984, y: 67.820526}
+  m_SizeDelta: {x: 703.8894, y: 895.605}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1789284561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789284559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1789284562
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789284559}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1805904440
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4785,7 +4861,7 @@ RectTransform:
   m_Children:
   - {fileID: 2051966608}
   m_Father: {fileID: 1088820428}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5478,6 +5554,7 @@ MonoBehaviour:
   solutionRow: {fileID: 8408316945960889901}
   pointer: {fileID: 1958830700}
   blockPanel: {fileID: 108805744}
+  gameOverBlocker: {fileID: 1789284559}
   green: {fileID: 21300000, guid: 325034c1577e8234895faabef6070973, type: 3}
   red: {fileID: 21300000, guid: f3f6934e32a69a84582472bae585b241, type: 3}
   blue: {fileID: 21300000, guid: b5fee474226cf5d499b79dac3bc74608, type: 3}

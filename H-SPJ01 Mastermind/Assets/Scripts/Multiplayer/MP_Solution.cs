@@ -14,6 +14,7 @@ public class MP_Solution : NetworkBehaviour
     [SerializeField] GameObject solutionRow = null;
     [SerializeField] GameObject pointer= null;
     [SerializeField] GameObject blockPanel= null;
+    [SerializeField] GameObject gameOverBlocker= null;
     [SerializeField] Sprite green = null;
     [SerializeField] Sprite red = null;
     [SerializeField] Sprite blue = null;
@@ -60,6 +61,10 @@ public class MP_Solution : NetworkBehaviour
 
     //When button validate is pressed to check Player Input
     public void onValidate(Button validateButton){
+        //Destroy GameObject if there is an active selectionbar
+        if(GameObject.Find("ColorSelectionBar(Clone)")){
+            Destroy(GameObject.Find("ColorSelectionBar(Clone)"));
+        }
         GameObject parentGameObject = validateButton.transform.parent.gameObject;
         int[] colors = new int[5];
 
@@ -206,7 +211,7 @@ public class MP_Solution : NetworkBehaviour
         displaySolution();
         txtSolution.text = player.GetWinner() + " hat gewonnen";
         pointer.SetActive(false);
-        blockPanel.SetActive(true);
+        gameOverBlocker.SetActive(true);
         if(NetworkServer.active){
             newGameButton.gameObject.SetActive(true);
         }
