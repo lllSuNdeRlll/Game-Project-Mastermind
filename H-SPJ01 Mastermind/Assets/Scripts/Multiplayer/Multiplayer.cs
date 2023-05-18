@@ -39,7 +39,7 @@ public class Multiplayer : NetworkBehaviour
         ClientRowProgressUpdate();
 
         //Set inactive when all players are ready
-        if(player.CmdGetPlayersReady()){
+        if(player.GetPlayersReady()){
             MultiplayerUI.SetActive(false);
         }
     }

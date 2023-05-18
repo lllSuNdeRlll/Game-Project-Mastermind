@@ -208,10 +208,16 @@ public class MP_Solution : NetworkBehaviour
 
     private void ClientWinnerUpdate(){
         if(player.GetWinner()==null){return;}
+
+        //Display for all Players who won the game
         displaySolution();
         txtSolution.text = player.GetWinner() + " hat gewonnen";
+
+        //Deactivate Pointer and enable Blocker
         pointer.SetActive(false);
         gameOverBlocker.SetActive(true);
+
+        //Enable NewGameButton for the Host
         if(NetworkServer.active){
             newGameButton.gameObject.SetActive(true);
         }

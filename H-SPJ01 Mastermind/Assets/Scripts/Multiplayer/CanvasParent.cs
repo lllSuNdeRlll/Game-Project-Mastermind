@@ -33,7 +33,7 @@ public class CanvasParent : MonoBehaviour
     public void HostLobby(){
         landingPanel.SetActive(false);
 
-        //Only Steam Friends can joing the game, limited to the numberOfPlayers specified
+        //Only Steam Friends can join the game, limited to the numberOfPlayers specified
         //Steam will provide a lobby
         if(useSteam){
             SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, numberOfPlayers);

@@ -50,6 +50,26 @@ public class Player : NetworkBehaviour
         winner = null;
     }
 
+    //Check if all players are ready, if true start the game 
+    public bool GetPlayersReady(){
+        List<Player> players = ((MMNetworkManager)NetworkManager.singleton).Players;
+        int readyCounter = 0;
+        foreach(Player p  in players){
+            if(p.GetPlayerReady()){
+                readyCounter++;
+            }
+        }
+        if(readyCounter == players.Count){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void SetWinner(string name){
+        this.winner = name;
+    }
+
     public override void OnStartServer()
     {
         //avoid destroying the player gameobject on scene change
@@ -107,10 +127,6 @@ public class Player : NetworkBehaviour
         }
     }
 
-    private void SetWinner(string name){
-        this.winner = name;
-    }
-
     [Command]
     public void CmdUpdatePlayerRowProgress(int number){
         this.rowProgress = number;
@@ -125,22 +141,6 @@ public class Player : NetworkBehaviour
     [Command]
     public void CmdStartGame(){
         ((MMNetworkManager)NetworkManager.singleton).StartGame();
-    }
-
-    //Check if all players are ready, if true start the game (RpcLoardBoard)
-    public bool CmdGetPlayersReady(){
-        List<Player> players = ((MMNetworkManager)NetworkManager.singleton).Players;
-        int readyCounter = 0;
-        foreach(Player p  in players){
-            if(p.GetPlayerReady()){
-                readyCounter++;
-            }
-        }
-        if(readyCounter == players.Count){
-            return true;
-        } else {
-            return false;
-        }
     }
 
     #endregion 

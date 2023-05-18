@@ -79,10 +79,5 @@ public class MMNetworkManager : NetworkManager
         ClientDisconnected?.Invoke();
     }
 
-    public override void OnStopClient()
-    {
-        Players.Clear();
-    }
-
     #endregion
 }
