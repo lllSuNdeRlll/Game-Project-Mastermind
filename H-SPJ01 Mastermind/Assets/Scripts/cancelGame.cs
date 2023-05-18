@@ -6,11 +6,7 @@ using Mirror;
 
 public class cancelGame : MonoBehaviour
 {
-    [SerializeField] bool isMultiplayer = false;
-
-    public void onCancelGame(GameObject cancelConfirmation){
-        cancelConfirmation.SetActive(true);
-    }
+    [SerializeField] bool isMultiplayer;
 
     public void onConfirmCancel(){
         if(isMultiplayer){
