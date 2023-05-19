@@ -2,7 +2,9 @@
 
 Used Assets:
 
-Mirror 73.0.0 - released on February 10, 2023 \
+Mirror 73.0.0 (https://github.com/MirrorNetworking/Mirror) - released on February 10, 2023 \
+FizzySteamworks (https://github.com/Chykary/FizzySteamworks) - released on November 29, 2022\
+Steamwors.Net (https://steamworks.github.io/) \
 TextMeshPro Font - Bangers Regular (https://fonts.google.com/specimen/Bangers)
 
 Useful ressources:
