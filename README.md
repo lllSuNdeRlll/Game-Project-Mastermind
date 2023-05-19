@@ -9,6 +9,12 @@ TextMeshPro Font - Bangers Regular (https://fonts.google.com/specimen/Bangers)
 
 Useful ressources:
 
+Wood Design: \
+https://www.youtube.com/watch?v=W_ZZE771h7Q \
+
+Gem Design: \
+https://www.youtube.com/watch?v=C0rtO_HkdJc \
+
 GitHub Setup: \
 https://www.youtube.com/watch?v=qpXxcvS-g3g&t=362s \
 
